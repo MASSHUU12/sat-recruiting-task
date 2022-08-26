@@ -20,6 +20,9 @@ mod probability_of_fail_controller;
 // table of contents
 // https://blog.knoldus.com/containerize-rust-application-with-docker/
 
+// TODO: make available on lan
+// TODO: Docker
+
 #[tokio::main]
 async fn main() {
     // Load variables from .env file.

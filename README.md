@@ -1,16 +1,36 @@
 # SAT Recruitment Task
 
-These API are a recruitment task commissioned by Software Angels Technologies.
+This API is a recruitment task commissioned by Software Angels Technologies.
+
+The compiled version for `Windows` is available [here](#).
+
+- [SAT Recruitment Task](#sat-recruitment-task)
+- [Technologies used](#technologies-used)
+- [Development setup](#development-setup)
+  - [Fix for possible error when using with VSCode:](#fix-for-possible-error-when-using-with-vscode)
+- [API calls](#api-calls)
+  - [GET: /calculateDieselUsageForDistance?distance=?yearOfProduction=?fuelUsagePer100KM=](#get-calculatedieselusagefordistancedistanceyearofproductionfuelusageper100km)
+    - [Implementation notes:](#implementation-notes)
+    - [Parameters](#parameters)
+    - [Response messages](#response-messages)
+  - [GET: /probabilityOfUnitInjectorFail](#get-probabilityofunitinjectorfail)
+    - [Implementation notes:](#implementation-notes-1)
+    - [Parameters](#parameters-1)
+    - [Response messages](#response-messages-1)
 
 # Technologies used
 
-- Rust
-- Docker?
-- ...
+- Rust ^1.63.0
 
 # Development setup
 
-make available on lan?
+> Make sure you have Rust installed.
+
+Copy the `.env.example` file and rename it to `.env`, and run:
+
+```sh
+> cargo run
+```
 
 ## Fix for possible error when using with VSCode:
 
@@ -21,10 +41,6 @@ If you are getting error: `unresolved import 'rand' use of undeclared crate or m
    "rust": "cargo run # $fileName"
 }
 ```
-
-## Dependencies documentations:
-
-- [Warp](https://crates.io/crates/warp)
 
 # API calls
 
