@@ -10,6 +10,18 @@ These API are a recruitment task commissioned by Software Angels Technologies.
 
 # Development setup
 
+make available on lan?
+
+## Fix for possible error when using with VSCode:
+
+If you are getting error: `unresolved import 'rand' use of undeclared crate or module 'rand'`, try adding this to settings.json.
+
+```json
+"code-runner.executorMap": {
+   "rust": "cargo run # $fileName"
+}
+```
+
 ## Dependencies documentations:
 
 - [Warp](https://crates.io/crates/warp)
