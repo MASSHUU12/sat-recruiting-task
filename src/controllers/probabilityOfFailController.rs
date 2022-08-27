@@ -7,12 +7,17 @@ use std::collections::HashMap;
  * @params vin - I dunno what this is, but customer really wants it here.
  */
 pub async fn probability_of_fail_controller(
-    _vin: HashMap<String, String>,
+    vin: HashMap<String, String>,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    // TODO: Check if params are empty.
-
     let mut result = HashMap::new();
     let mut rng = rand::thread_rng();
+
+    // Check if vin is long enough.
+    // Since vin is not used in any way, a more thorough validation of it is not needed.
+    if vin["vin"].len() != 17 as usize {
+        result.insert("err", format!("Parameter vin is invalid: {}", vin["vin"]));
+        return Ok(warp::reply::json(&result));
+    }
 
     // Generate random number in range 0 - 100, and make it string.
     let probability = rng.gen_range(0..100).to_string();
