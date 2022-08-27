@@ -28,13 +28,15 @@ The compiled version for `Windows` is available [here](#).
 
 Copy the `.env.example` file and rename it to `.env`, and run:
 
+> In the .env file you can customize the port on which the server will run.
+
 ```sh
 > cargo run
 ```
 
 ## Fix for possible error when using with VSCode:
 
-If you are getting error: `unresolved import 'rand' use of undeclared crate or module 'rand'`, try adding this to settings.json.
+If you are getting error: `unresolved import 'rand' use of undeclared crate or module 'rand'`, try adding this to settings.json (VSCode settings).
 
 ```json
 "code-runner.executorMap": {

@@ -29,7 +29,7 @@ async fn main() {
     dotenv().ok();
 
     // Check if variables from .env exists.
-    let port = validate_env();
+    let variables = validate_env();
 
     // GET: /calculateDieselUsageForDistance
     let calculate_diesel_usage_for_distance = warp::get()
@@ -54,7 +54,8 @@ async fn main() {
     // Get all routes.
     let routes = calculate_diesel_usage_for_distance.or(probability_of_unit_injector_fail);
 
-    println!("Server listening on port {}.", port);
+    println!("[server]: Listening on port {}.", variables["PORT"]);
 
-    warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+    // TODO: Support for custom IP rather than hardcoded.
+    warp::serve(routes).run(([192, 168, 1, 103], 3030)).await;
 }
