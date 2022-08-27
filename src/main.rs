@@ -31,6 +31,9 @@ async fn main() {
     // Check if variables from .env exists.
     let variables = validate_env();
 
+    // Create Vec holding IP.
+    let ip = Vec::from_iter(variables["IP"].split(".").map(|x| x.parse().unwrap()));
+
     // GET: /calculateDieselUsageForDistance
     let calculate_diesel_usage_for_distance = warp::get()
         // Path
@@ -54,10 +57,15 @@ async fn main() {
     // Get all routes.
     let routes = calculate_diesel_usage_for_distance.or(probability_of_unit_injector_fail);
 
-    println!("[server]: Listening on port {}.", variables["PORT"]);
+    println!(
+        "[server]: Listening on: {}:{}.",
+        variables["IP"], variables["PORT"]
+    );
 
-    // TODO: Support for custom IP rather than hardcoded.
     warp::serve(routes)
-        .run(([127, 0, 0, 1], variables["PORT"].parse::<u16>().unwrap()))
+        .run((
+            [ip[0], ip[1], ip[2], ip[3]],
+            variables["PORT"].parse::<u16>().unwrap(),
+        ))
         .await;
 }

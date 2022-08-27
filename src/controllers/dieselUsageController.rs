@@ -45,16 +45,22 @@ fn validate_params(distance: String, year: String, usage: String) -> Vec<String>
     let mut errors = Vec::new();
 
     if distance.parse::<i32>().unwrap_or_default() == 0 {
-        errors.push(format!("Parameter 'distance' is invalid: {}", distance));
+        errors.push(format!(
+            "[server]: Parameter 'distance' is invalid: {}",
+            distance
+        ));
     }
 
     if year.parse::<i32>().unwrap_or_default() == 0 {
-        errors.push(format!("Parameter 'yearOfProduction' is invalid: {}", year));
+        errors.push(format!(
+            "[server]: Parameter 'yearOfProduction' is invalid: {}",
+            year
+        ));
     }
 
     if usage.parse::<i32>().unwrap_or_default() == 0 {
         errors.push(format!(
-            "Parameter 'fuelUsagePer100KM' is invalid: {}",
+            "[server]: Parameter 'fuelUsagePer100KM' is invalid: {}",
             usage
         ));
     }

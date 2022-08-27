@@ -15,7 +15,10 @@ pub async fn probability_of_fail_controller(
     // Check if vin is long enough.
     // Since vin is not used in any way, a more thorough validation of it is not needed.
     if vin["vin"].len() != 17 as usize {
-        result.insert("err", format!("Parameter vin is invalid: {}", vin["vin"]));
+        result.insert(
+            "err",
+            format!("[server]: Parameter vin is invalid: {}", vin["vin"]),
+        );
         return Ok(warp::reply::json(&result));
     }
 
