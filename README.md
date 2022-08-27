@@ -7,6 +7,7 @@ The compiled version for `Windows` is available [here](#).
 - [SAT Recruitment Task](#sat-recruitment-task)
 - [Technologies used](#technologies-used)
 - [Development setup](#development-setup)
+  - [Running in Docker](#running-in-docker)
   - [Fix for possible error when using with VSCode:](#fix-for-possible-error-when-using-with-vscode)
 - [API calls](#api-calls)
   - [GET: /calculateDieselUsageForDistance?distance=?yearOfProduction=?fuelUsagePer100KM=](#get-calculatedieselusagefordistancedistanceyearofproductionfuelusageper100km)
@@ -32,6 +33,39 @@ Copy the `.env.example` file and rename it to `.env`, and run:
 
 ```sh
 > cargo run
+```
+
+Env file is only useful if you don't use Docker, steps for running program in Docker can be found [here](#running-in-docker).
+
+## Running in Docker
+
+> Make sure that Docker is running in the background.
+
+> For some reason the host does not have access to the container, it is possible that this is a bug only with me, so I leave this information in the documentation.
+
+To create a new container use (this may take a while, because Docker has to download all the necessary things and compile the program):
+
+```sh
+> docker build -t sat-recruiting-task .
+```
+
+Then, to start the container use:
+
+```sh
+> docker run -p 8080:3030 --rm --name sat-task sat-recruiting-task
+```
+
+or, to run in detached mode:
+
+```sh
+> docker run -dp 8080:3030 --rm --name sat-task sat-recruiting-task
+```
+
+Regardless of how you run app, you will get some info in console. Ignore it, in the case of running the program in Docker it does not matter:
+
+```text
+Variable PORT is not specified in .env file, using default: 3030.
+Variable IP is not specified in .env file, using default: 127.0.0.1
 ```
 
 ## Fix for possible error when using with VSCode:
