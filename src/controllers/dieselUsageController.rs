@@ -1,4 +1,8 @@
 use std::collections::HashMap;
+use validate_diesel_usage_params::validate_diesel_usage_params;
+
+#[path = "../utils/validateDieselUsageParams.rs"]
+mod validate_diesel_usage_params;
 
 /**
  * Calculate diesel usage.
@@ -9,7 +13,7 @@ pub async fn diesel_usage_controller(
     fuel_usage_per_100_km: HashMap<String, String>,
 ) -> Result<impl warp::Reply, warp::Rejection> {
     // Get errors from validation function.
-    let errors = validate_params(
+    let errors = validate_diesel_usage_params(
         String::from(&distance["distance"]),
         String::from(&year_of_production["yearOfProduction"]),
         String::from(&fuel_usage_per_100_km["fuelUsagePer100KM"]),
@@ -35,36 +39,4 @@ pub async fn diesel_usage_controller(
 
     // Return usage to user.
     return Ok(warp::reply::json(&result));
-}
-
-/**
- * Checks if params passed by user are valid, and can be used in program.
- * Returns collected errors or empty Vec.
- */
-fn validate_params(distance: String, year: String, usage: String) -> Vec<String> {
-    let mut errors = Vec::new();
-
-    // Defaults can be 0 because distance, year and usage passed by user should not be 0.
-    // Therefore, if the result is 0, you know that something has gone wrong.
-    if distance.parse::<i32>().unwrap_or_default() == 0 {
-        errors.push(format!(
-            "[server]: Parameter 'distance' is invalid: {}",
-            distance
-        ));
-    }
-
-    if year.parse::<i32>().unwrap_or_default() == 0 {
-        errors.push(format!(
-            "[server]: Parameter 'yearOfProduction' is invalid: {}",
-            year
-        ));
-    }
-
-    if usage.parse::<i32>().unwrap_or_default() == 0 {
-        errors.push(format!(
-            "[server]: Parameter 'fuelUsagePer100KM' is invalid: {}",
-            usage
-        ));
-    }
-    return errors;
 }
