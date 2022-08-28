@@ -9,12 +9,12 @@ The compiled version for `Windows` is available [here](https://github.com/MASSHU
   - [Running in Docker](#running-in-docker)
   - [Fix for possible error when using with VSCode:](#fix-for-possible-error-when-using-with-vscode)
 - [API calls](#api-calls)
-  - [GET: /calculateDieselUsageForDistance?distance=?yearOfProduction=?fuelUsagePer100KM=](#get-calculatedieselusagefordistancedistanceyearofproductionfuelusageper100km)
-    - [Implementation notes:](#implementation-notes)
+  - [GET: /calculateDieselUsageForDistance](#get-calculatedieselusagefordistance)
+    - [Implementation notes](#implementation-notes)
     - [Parameters](#parameters)
     - [Response messages](#response-messages)
   - [GET: /probabilityOfUnitInjectorFail](#get-probabilityofunitinjectorfail)
-    - [Implementation notes:](#implementation-notes-1)
+    - [Implementation notes](#implementation-notes-1)
     - [Parameters](#parameters-1)
     - [Response messages](#response-messages-1)
 
@@ -22,12 +22,18 @@ The compiled version for `Windows` is available [here](https://github.com/MASSHU
 
 > Make sure you have Rust installed.
 
-Copy the `.env.example` file and rename it to `.env`, and run:
+Copy the `.env.example` file, rename it to `.env`, and run:
 
 > In the .env file you can customize the port and IP address on which the server will run.
 
 ```sh
 > cargo run
+```
+
+If you want to build release ready app, use:
+
+```sh
+> cargo build --release
 ```
 
 Env file is only useful if you don't use Docker, steps for running program in Docker can be found [below](#running-in-docker).
@@ -44,7 +50,7 @@ To create a new container use (this may take a while, because Docker has to down
 > docker build -t sat-recruiting-task .
 ```
 
-Then, to start the container use:
+Then, to start the container:
 
 ```sh
 > docker run -p 8080:3030 --rm --name sat-task sat-recruiting-task
@@ -75,9 +81,9 @@ If you are getting error: `unresolved import 'rand' use of undeclared crate or m
 
 # API calls
 
-## GET: /calculateDieselUsageForDistance?distance=?yearOfProduction=?fuelUsagePer100KM=
+## GET: /calculateDieselUsageForDistance
 
-### Implementation notes:
+### Implementation notes
 
 This endpoint returns fuel usage based on input.
 
@@ -98,7 +104,7 @@ Authorization token: `none`
 <table>
 
 <tr>
-    <th>Parameter</th>
+    <th>Code</th>
     <th>Reason</th>
     <th>Response</th>
 </tr>
@@ -117,11 +123,29 @@ Authorization token: `none`
 </td>
 </tr>
 
+<tr>
+<td>400</td>
+<td>Returns info about user error.</td>
+<td>
+
+```json
+{
+  "err": [
+    "Parameter 'distance' is invalid: 250km",
+    "Parameter 'yearOfProduction' is invalid: dwa tysiące sześć",
+    "Parameter 'fuelUsagePer100KM' is invalid: 10 na 100 km"
+  ]
+}
+```
+
+</td>
+</tr>
+
 </table>
 
 ## GET: /probabilityOfUnitInjectorFail
 
-### Implementation notes:
+### Implementation notes
 
 This endpoint returns a percentage of the chance that the engine of the C6 model will fail on the Unit Injector element.
 
@@ -133,14 +157,14 @@ Authorization token: `none`
 
 | Parameter | Value    | Description                                              | Parameter type | Data type |
 | --------- | -------- | -------------------------------------------------------- | -------------- | --------- |
-| vin       | Required | I dunno what this is, but customer really wants it here. | Query          | String?   |
+| vin       | Required | I dunno what this is, but customer really wants it here. | Query          | String    |
 
 ### Response messages
 
 <table>
 
 <tr>
-    <th>Parameter</th>
+    <th>Code</th>
     <th>Reason</th>
     <th>Response</th>
 </tr>
@@ -153,6 +177,20 @@ Authorization token: `none`
 ```json
 {
   "failProbability": "0,77"
+}
+```
+
+</td>
+</tr>
+
+<tr>
+<td>400</td>
+<td>Returns info about user error.</td>
+<td>
+
+```json
+{
+  "err": "Parameter vin is invalid: 2t5i1011111111111d"
 }
 ```
 

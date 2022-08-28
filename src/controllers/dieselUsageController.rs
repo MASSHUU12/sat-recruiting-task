@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use validate_diesel_usage_params::validate_diesel_usage_params;
+use warp::hyper::StatusCode;
 
 #[path = "../utils/validateDieselUsageParams.rs"]
 mod validate_diesel_usage_params;
@@ -21,9 +22,12 @@ pub async fn diesel_usage_controller(
     let mut result = HashMap::new();
 
     // Check if validation collected any errors.
-    if errors.len() >= 1 as usize {
+    if errors["err"].len() >= 1 as usize {
         // Return errors to user.
-        return Ok(warp::reply::json(&errors));
+        return Ok(warp::reply::with_status(
+            warp::reply::json(&errors),
+            StatusCode::BAD_REQUEST,
+        ));
     }
 
     // Convert params into f32.
@@ -38,5 +42,8 @@ pub async fn diesel_usage_controller(
     result.insert("fuelUsage", usage);
 
     // Return usage to user.
-    return Ok(warp::reply::json(&result));
+    return Ok(warp::reply::with_status(
+        warp::reply::json(&result),
+        StatusCode::OK,
+    ));
 }
