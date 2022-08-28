@@ -22,6 +22,7 @@ pub async fn diesel_usage_controller(
         return Ok(warp::reply::json(&errors));
     }
 
+    // Convert params into f32.
     let distance_num = distance["distance"].parse::<f32>().unwrap();
     let usage_num = fuel_usage_per_100_km["fuelUsagePer100KM"]
         .parse::<f32>()
@@ -41,9 +42,10 @@ pub async fn diesel_usage_controller(
  * Returns collected errors or empty Vec.
  */
 fn validate_params(distance: String, year: String, usage: String) -> Vec<String> {
-    // Defaults can be 0 because distance, year and usage passed by user should not be 0.
     let mut errors = Vec::new();
 
+    // Defaults can be 0 because distance, year and usage passed by user should not be 0.
+    // Therefore, if the result is 0, you know that something has gone wrong.
     if distance.parse::<i32>().unwrap_or_default() == 0 {
         errors.push(format!(
             "[server]: Parameter 'distance' is invalid: {}",

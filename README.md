@@ -2,10 +2,9 @@
 
 This API is a recruitment task commissioned by Software Angels Technologies.
 
-The compiled version for `Windows` is available [here](#).
+The compiled version for `Windows` is available [here](https://github.com/MASSHUU12/sat-recruiting-task/releases).
 
 - [SAT Recruitment Task](#sat-recruitment-task)
-- [Technologies used](#technologies-used)
 - [Development setup](#development-setup)
   - [Running in Docker](#running-in-docker)
   - [Fix for possible error when using with VSCode:](#fix-for-possible-error-when-using-with-vscode)
@@ -19,29 +18,25 @@ The compiled version for `Windows` is available [here](#).
     - [Parameters](#parameters-1)
     - [Response messages](#response-messages-1)
 
-# Technologies used
-
-- Rust ^1.63.0
-
 # Development setup
 
 > Make sure you have Rust installed.
 
 Copy the `.env.example` file and rename it to `.env`, and run:
 
-> In the .env file you can customize the port on which the server will run.
+> In the .env file you can customize the port and IP address on which the server will run.
 
 ```sh
 > cargo run
 ```
 
-Env file is only useful if you don't use Docker, steps for running program in Docker can be found [here](#running-in-docker).
+Env file is only useful if you don't use Docker, steps for running program in Docker can be found [below](#running-in-docker).
 
 ## Running in Docker
 
 > Make sure that Docker is running in the background.
 
-> For some reason the host does not have access to the container, it is possible that this is a bug only with me, so I leave this information in the documentation.
+> For some reason the host does not have access to the container, it is possible that this is a bug only with me, so I leave this section in the documentation.
 
 To create a new container use (this may take a while, because Docker has to download all the necessary things and compile the program):
 
@@ -70,7 +65,7 @@ Variable IP is not specified in .env file, using default: 127.0.0.1
 
 ## Fix for possible error when using with VSCode:
 
-If you are getting error: `unresolved import 'rand' use of undeclared crate or module 'rand'`, try adding this to settings.json (VSCode settings).
+If you are getting error: `unresolved import 'rand' use of undeclared crate or module 'rand'` or something similar, try adding this to settings.json (VSCode settings).
 
 ```json
 "code-runner.executorMap": {

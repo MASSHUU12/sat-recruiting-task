@@ -35,9 +35,11 @@ pub fn validate_env() -> HashMap<String, String> {
     // Validate IP variable and return its contents.
     let ip = match env::var("IP") {
         Ok(var) => {
+            // Try splitting the IP address.
             let split = Vec::from_iter(var.split(".").map(String::from));
             let mut temp_var = var;
 
+            // Check if every part of IP address can be converted into integer.
             for ip_fragment in split {
                 if ip_fragment.parse::<u16>().unwrap_or(9999) == 9999 {
                     println!("[server]: The server can't run on the specified IP address, using default: 127.0.0.1");
